@@ -29,11 +29,3 @@ Para ejecutar un contenedor de Docker con postgresql 15 se puede ejecutar el sig
 `docker run --name postgres_15.4 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=postgres -e POSTGRES_DB=vehicles -p 5432:5432 -d postgres:15.4`
 
 Ejecutar el proyecto: `./gradlew bootRun`
-
----
-### Ejecución en contenedores Docker
-Ejecutar los comandos: 
-
-`./gradlew build`
-
-`docker-compose up`

@@ -6,4 +6,5 @@ package dev.wsalquinga.vehicles.common;
 public class GlobalConstant {
     public static final String API_V1_VERSION = "/api/v1";
     public static final String API_PRICE_VEHICLES = "https://auto.jedai.workers.dev";
+    public static final int PERIOD_MAINTENANCE = 60;
 }

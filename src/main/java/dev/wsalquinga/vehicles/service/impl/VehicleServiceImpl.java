@@ -2,6 +2,7 @@ package dev.wsalquinga.vehicles.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.wsalquinga.vehicles.common.GlobalConstant;
 import dev.wsalquinga.vehicles.config.WebClientConfig;
 import dev.wsalquinga.vehicles.dto.PriceDTO;
 import dev.wsalquinga.vehicles.dto.req.VehicleReqDTO;
@@ -12,6 +13,7 @@ import dev.wsalquinga.vehicles.exception.ServerErrorException;
 import dev.wsalquinga.vehicles.mapper.VehicleMapper;
 import dev.wsalquinga.vehicles.repository.VehicleRepository;
 import dev.wsalquinga.vehicles.service.VehicleService;
+import dev.wsalquinga.vehicles.util.HolidaysUtil;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wsalquinga on 31/10/2023
@@ -45,6 +52,19 @@ public class VehicleServiceImpl implements VehicleService {
         PriceDTO vehiclePrice = this.getPriceByLicensePlate(vehicleReqDTO.getPlate());
         vehicle.setPrice(vehiclePrice.getPrecio());
         return this.vehicleMapper.toVehicleResDTO(this.vehicleRepository.save(vehicle));
+    }
+
+    @Override
+    public List<VehicleResDTO> findForMaintenance(LocalDate date) {
+        DayOfWeek day = date.getDayOfWeek();
+        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY || HolidaysUtil.HOLIDAYS_LIST.contains(date))
+            return new ArrayList<>();
+        LocalDate startPeriod = date.minusDays(GlobalConstant.PERIOD_MAINTENANCE);
+        List<Vehicle> vehiclesInLastSixtyDays = this.vehicleRepository.findAllByPeriod(startPeriod, date);
+        List<Vehicle> vehiclesForMaintenance = vehiclesInLastSixtyDays.stream()
+                .filter(vehicle -> vehicle.getPurchaseDate().getDayOfWeek() == day)
+                .toList();
+        return this.vehicleMapper.toVehicleResDTO(vehiclesForMaintenance);
     }
 
     private PriceDTO getPriceByLicensePlate(String plate) {
