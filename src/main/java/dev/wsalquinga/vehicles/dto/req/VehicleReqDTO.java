@@ -24,6 +24,5 @@ public class VehicleReqDTO {
     @NotNull(message = "La fecha de compra es requerida")
     private LocalDate purchaseDate;
 
-    @NotNull(message = "El precio es requerido")
-    private BigDecimal price;
+    private String observation;
 }
