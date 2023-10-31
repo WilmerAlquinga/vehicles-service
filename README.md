@@ -1,18 +1,12 @@
 # Vehicle Service
-## Tecnologías y dependencias
-* Java 17
-* Spring Boot 3
-* Gradle
-* PostgreSQL 15
-* Flyway
-* WebClient
-* Lombok
-* Mapstruct
+## NOTAS
+* El backend devuelve con páginado el listado de vehiculos pero en el front no se aun no se envian los datos para eso, se esta tomando por defecto si no se envian la primera página y 20 elementos
+* El formato en el que se debe enviar la fecha es: yyyy-MM-dd, este endpoint aun no se está consumiendo en el front
+* El SQL de la base esta en la carpeta *src/main/java/resources* en el archivo **V1.0__AddInitialSchema.sql**, se ejecuta automáticamente al iniciar la app.
 ## Versionamiento
 Los commits en este repositorio siguen las convenciones de: [Convetional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 ___
 ## Instrucciones de ejecuión
-Después de ejecutar la aplicación, se 
 
 ### BD local
 Para ejecutar esta aplicación se necesita una base de datos PostgreSQL 15 y crear la base de datos: 

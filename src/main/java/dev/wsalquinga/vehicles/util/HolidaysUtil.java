@@ -11,8 +11,6 @@ public class HolidaysUtil {
     }
 
     public static final List<LocalDate> HOLIDAYS_LIST = List.of(
-            LocalDate.of(2023, 11, 1),
-            LocalDate.of(2023, 10, 31),
             LocalDate.of(2023, 12, 25),
             LocalDate.of(2023, 12, 31)
     );
