@@ -1,6 +1,6 @@
 # Vehicle Service
 ## NOTAS
-* El backend devuelve con páginado el listado de vehiculos pero en el front no se aun no se envian los datos para eso, se esta tomando por defecto si no se envian la primera página y 20 elementos
+* El backend devuelve con páginado el listado de vehiculos pero en el front aun no se envian los datos para eso, si no se envian se esta tomando por defecto la primera página y 20 elementos
 * El formato en el que se debe enviar la fecha es: yyyy-MM-dd, este endpoint aun no se está consumiendo en el front
 * El SQL de la base esta en la carpeta *src/main/java/resources* en el archivo **V1.0__AddInitialSchema.sql**, se ejecuta automáticamente al iniciar la app.
 ## Versionamiento
