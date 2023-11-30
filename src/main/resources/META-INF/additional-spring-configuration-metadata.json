@@ -4,5 +4,10 @@
       "name": "frontend.base.url",
       "type": "java.lang.String",
       "description": "Description for frontend.base.url."
-  }
-] }
+    },
+    {
+      "name": "vehicles.openapi.local-url",
+      "type": "java.lang.String",
+      "description": "Description for vehicles.openapi.local-url."
+    }
+  ] }
