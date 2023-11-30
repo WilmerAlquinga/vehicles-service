@@ -28,33 +28,33 @@ public class Vehicle {
     @Column(name = "vehicle_id")
     private Long id;
 
-    @Column(name = "vehicle_plate", nullable = false, length = 16, unique = true)
+    @Column(name = "vehicle_plate")
     private String plate;
 
-    @Column(name = "vehicle_model", nullable = false, length = 32)
+    @Column(name = "vehicle_model")
     private String model;
 
-    @Column(name = "vehicle_year", nullable = false)
+    @Column(name = "vehicle_year")
     private Integer year;
 
-    @Column(name = "vehicle_purchase_date", nullable = false)
+    @Column(name = "vehicle_purchase_date")
     private LocalDate purchaseDate;
 
-    @Column(name = "vehicle_price", nullable = false, precision = 4)
+    @Column(name = "vehicle_price")
     private BigDecimal price;
 
-    @Column(name = "vehicle_observation", length = 256)
+    @Column(name = "vehicle_observation")
     private String observation;
 
     @CreatedDate
-    @Column(name = "vehicle_created_at", nullable = false, columnDefinition = "TIMESTAMP")
+    @Column(name = "vehicle_created_at")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "vehicle_updated_at", nullable = false, columnDefinition = "TIMESTAMP")
+    @Column(name = "vehicle_updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "vehicle_deleted_at", columnDefinition = "TIMESTAMP")
+    @Column(name = "vehicle_deleted_at")
     private LocalDateTime deletedAt;
 
     @Override
