@@ -60,9 +60,24 @@ public class VehicleServiceImpl implements VehicleService {
         if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY || HolidaysUtil.HOLIDAYS_LIST.contains(date))
             return new ArrayList<>();
         LocalDate startPeriod = date.minusDays(GlobalConstant.PERIOD_MAINTENANCE);
-        List<Vehicle> vehiclesInLastSixtyDays = this.vehicleRepository.findAllByPeriod(startPeriod, date);
+        LocalDate endPeriod = date.minusDays(1);
+        List<Vehicle> vehiclesInLastSixtyDays = this.vehicleRepository.findAllByPeriod(startPeriod, endPeriod);
         List<Vehicle> vehiclesForMaintenance = vehiclesInLastSixtyDays.stream()
-                .filter(vehicle -> vehicle.getPurchaseDate().getDayOfWeek() == day)
+                .filter(vehicle -> {
+                    DayOfWeek dayOfPurchase = vehicle.getPurchaseDate().getDayOfWeek();
+                    if (dayOfPurchase == day
+                    || day == DayOfWeek.MONDAY && (dayOfPurchase == DayOfWeek.SATURDAY || dayOfPurchase == DayOfWeek.SUNDAY)) {
+                        return true;
+                    } else if (HolidaysUtil.HOLIDAYS_LIST.contains(vehicle.getPurchaseDate())) {
+                        LocalDate weekDay = vehicle.getPurchaseDate();
+                        while(HolidaysUtil.HOLIDAYS_LIST.contains(weekDay)
+                                || (weekDay.getDayOfWeek() == DayOfWeek.SATURDAY || weekDay.getDayOfWeek() == DayOfWeek.SUNDAY)) {
+                            weekDay = weekDay.plusDays(1);
+                        }
+                        return weekDay.getDayOfWeek() == day;
+                    }
+                    return false;
+                })
                 .toList();
         return this.vehicleMapper.toVehicleResDTO(vehiclesForMaintenance);
     }
@@ -82,7 +97,7 @@ public class VehicleServiceImpl implements VehicleService {
                 })
                 .bodyToMono(String.class)
                 .block();
-        PriceDTO priceDTO = new PriceDTO();
+        PriceDTO priceDTO;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             priceDTO = objectMapper.readValue(vehiclePrice, PriceDTO.class);
