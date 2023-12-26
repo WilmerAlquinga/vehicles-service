@@ -23,3 +23,13 @@ Para ejecutar un contenedor de Docker con postgresql 15 se puede ejecutar el sig
 ### Ejecución del proyecto:
 
 Ejecutar el comando: `./gradlew bootRun`
+
+### Ejecución del proyecto en Docker (test remote debug):
+
+Ejecutar los comandos: 
+
+`./gradlew build`
+
+`docker build -t vehicles-service:0.0.1 .`
+
+`docker run -p 8080:8080 -p 5005:5005 --network vehicles-net --name vehicles-ws vehicles-service:0.0.1`
